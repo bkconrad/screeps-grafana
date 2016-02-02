@@ -49,7 +49,7 @@ ansible-playbook \
   playbook.yml
 ```
 
-** Don't remove the comma before `YOURSERVERIP`. You will get a mysterious error. If you pass your IP like `,12.34.56.78` you are doing it correctly.**
+**Don't remove the comma before `YOURSERVERIP`. You will get a mysterious error. If you pass your IP like `,12.34.56.78` you are doing it correctly.**
 
 If the run errors out, check your parameters and retry. It is common to see transient errors from Apt or GPG, which are both fixed by re-running.
 
@@ -65,6 +65,7 @@ password: admin
 ```
 
 *THIS NEXT STEP IS VERY IMPORTANT, AND IF YOU SKIP IT NOTHING WILL SEEM TO WORK*
+
 Add graphite as a data source by going to Data Sources -> Add New, then entering the following Url under Http settings:
 
 ```
