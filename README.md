@@ -72,7 +72,7 @@ Add graphite as a data source by going to Data Sources -> Add New, then entering
 http://localhost:8000
 ```
 
-Click Add. You are now ready to [make]create some dashboards](https://www.youtube.com/watch?v=OUvJamHeMpw).
+Click Add. You are now ready to [create some dashboards](https://www.youtube.com/watch?v=OUvJamHeMpw).
 
 To send stats to the dashboard, simply write them to `Memory.stats`. For example:
 
