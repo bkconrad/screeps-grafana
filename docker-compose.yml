@@ -1,0 +1,10 @@
+node:
+  build: .
+  links:
+   - graphite
+  env_file: docker-compose.env
+
+graphite: 
+  image: kamon/grafana_graphite
+  ports:
+   - "1337:80"

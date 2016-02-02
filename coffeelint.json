@@ -1,0 +1,30 @@
+{
+  "arrow_spacing": {
+    "name": "arrow_spacing",
+    "level": "error"
+  },
+  "line_endings": {
+    "name": "line_endings",
+    "level": "error",
+    "value": "unix"
+  },
+  "max_line_length": {
+    "name": "max_line_length",
+    "value": 120,
+    "level": "warn",
+    "limitComments": true
+  },
+  "missing_fat_arrows": {
+    "name": "missing_fat_arrows",
+    "level": "warn"
+  },
+  "no_stand_alone_at": {
+    "name": "no_stand_alone_at",
+    "level": "error"
+  },
+  "newline_at_eof": {
+    "module": "coffeelint-newline-at-eof",
+    "level": "error",
+    "behaviour": "require"
+  }
+}

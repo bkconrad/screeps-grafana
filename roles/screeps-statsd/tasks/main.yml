@@ -1,0 +1,72 @@
+---
+- name: Add docker repo key
+  when: ansible_distribution == 'Ubuntu'
+  shell: "apt-key adv --keyserver {{ docker_keyserver }} --recv-keys {{ docker_repo_key }}"
+  become_user: root
+
+- name: Add docker repo
+  when: ansible_distribution == 'Ubuntu'
+  template: src=docker.list.j2 dest=/etc/apt/sources.list.d/docker.list owner=root mode=0644
+
+- name: Install docker
+  when: ansible_distribution == 'Ubuntu'
+  apt: name=docker-engine={{ docker_engine_version }}-0~{{ansible_distribution_release}} update_cache=yes
+
+- name: Install pip
+  when: ansible_distribution == 'Ubuntu'
+  apt: name=python-pip update_cache=yes
+
+- name: Install docker-py
+  pip: name=docker-py
+
+- name: Check for data volume
+  stat: path=/dev/xvdf
+  register: data_volume
+
+- name: Create fs on data volume
+  filesystem: fstype=ext4 dev=/dev/xvdf
+  when: data_volume.stat.exists
+
+- name: Mount data volume
+  mount: name=/data src=/dev/xvdf fstype=ext4 state=present
+  when: data_volume.stat.exists
+
+- name: Create data subdirectories
+  file: state=directory recurse=true path={{ item }} mode=777
+  when: data_volume.stat.exists
+  with_items:
+  - /data/data/whisper
+  - /data/data/elasticsearch
+  - /data/data/grafana
+  - /data/log/graphite
+  - /data/log/elasticsearch
+
+- name: Set docker volume options
+  set_fact:
+    docker_volume_options:
+    - /data/data/whisper:/opt/graphite/storage/whisper
+    - /data/data/elasticsearch:/var/lib/elasticsearch
+    - /data/data/grafana:/opt/grafana/data
+  when: data_volume.stat.exists
+
+# tasks file for screeps-statsd
+- name: graphite docker
+  docker:
+    name: graphite
+    image: kamon/grafana_graphite
+    ports:
+    - "80:80"
+    - "81:81"
+    state: restarted
+    volumes: "{{ docker_volume_options | default() }}"
+
+- name: screeps-statsd docker
+  docker:
+    name: screeps-statsd
+    image: kaen/screeps-statsd
+    links:
+    - graphite
+    env:
+      SCREEPS_USERNAME: "{{ screeps_username }}"
+      SCREEPS_EMAIL: "{{ screeps_email }}"
+      SCREEPS_PASSWORD: "{{ screeps_password }}"
