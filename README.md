@@ -6,15 +6,18 @@ Pretty graphs for Screeps stats. There are two ways to get started:
 You can run this project locally, with all the drawbacks that entails.
 
 Install [docker](https://docs.docker.com/engine/installation/)
+
 Install [docker-compose](https://docs.docker.com/compose/install/)
 
 Copy and edit the example config file:
-``
+
+```
 cp docker-compose.env.example docker-compose.env
 $EDITOR docker-compose.env
-``
+```
 
 Run the docker thing:
+
 ```
 docker-compose up
 ```
@@ -71,6 +74,7 @@ http://localhost:8000
 Click Add. You are now ready to [make]create some dashboards](https://www.youtube.com/watch?v=OUvJamHeMpw).
 
 To send stats to the dashboard, simply write them to `Memory.stats`. For example:
+
 ```
 Memory.stats["room." + room.name + ".energyAvailable"] = room.energyAvailable;
 Memory.stats["room." + room.name + ".energyCapacityAvailable"] = room.energyCapacityAvailable;
