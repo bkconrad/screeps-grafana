@@ -1,10 +1,38 @@
 node:
   build: .
   links:
-   - graphite
+   - statsd
+  environment:
+    GRAPHITE_PORT_8125_UDP_ADDR: "statsd"
   env_file: docker-compose.env
-
+statsd:
+  image: ennexa/statsd
+  links: 
+   - graphite
 graphite: 
-  image: kamon/grafana_graphite
+  image: ennexa/graphite
+  volumes:
+   - /opt/graphite/conf
+   - /opt/graphite/storage/whisper
+grafana:
+  image: grafana/grafana
+  volumes:
+   - /var/lib/grafana
+  links:
+   - graphite
   ports:
-   - "1337:80"
+   - "3000:3000"
+grafana_setup_datasource:
+  image: appropriate/curl
+  links:
+   - grafana
+  command: |
+    curl 'http://admin:admin@grafana:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"name":"localGraphite","type":"graphite","url":"http://graphite:8000","access":"proxy","isDefault":true,"database":""}'
+grafana_setup_sampledashboard:
+  image: appropriate/curl
+  links:
+   - grafana
+  volumes:
+    - ./sampleDashboard.json:/sampleDashboard.json
+  command: |
+    curl 'http://admin:admin@grafana:3000/api/dashboards/db' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data @/sampleDashboard.json 
