@@ -16,13 +16,13 @@ cp docker-compose.env.example docker-compose.env
 $EDITOR docker-compose.env
 ```
 
-Run the docker thing:
+Run the setup:
 
 ```
-docker-compose up
+bash setup.sh
 ```
 
-Go to http://localhost:1337 in your browser, then see SETUP below.
+Go to http://localhost:1337 in your browser, then see Usage below.
 
 ## Path 2: Robust but not easy
 
@@ -53,9 +53,9 @@ ansible-playbook \
 
 If the run errors out, check your parameters and retry. It is common to see transient errors from Apt or GPG, which are both fixed by re-running.
 
-You are now ready to Setup
+You are now ready to use grafana!
 
-## Setup
+## Usage
 
 Got to http://localhost:1337 or your own real-life server's IP. Login with the following default credentials:
 
@@ -63,16 +63,7 @@ Got to http://localhost:1337 or your own real-life server's IP. Login with the f
 username: admin
 password: admin
 ```
-
-*THIS NEXT STEP IS VERY IMPORTANT, AND IF YOU SKIP IT NOTHING WILL SEEM TO WORK*
-
-Add graphite as a data source by going to Data Sources -> Add New, then entering the following Url under Http settings:
-
-```
-http://localhost:8000
-```
-
-Click Add. You are now ready to [create some dashboards](https://www.youtube.com/watch?v=OUvJamHeMpw).
+You are now ready to [create some dashboards](https://www.youtube.com/watch?v=OUvJamHeMpw).
 
 To send stats to the dashboard, simply write them to `Memory.stats`. For example:
 
@@ -81,6 +72,7 @@ Memory.stats["room." + room.name + ".energyAvailable"] = room.energyAvailable;
 Memory.stats["room." + room.name + ".energyCapacityAvailable"] = room.energyCapacityAvailable;
 Memory.stats["room." + room.name + ".controllerProgress"] = room.controller.progress;
 ```
+A sample dashboard is already installed that displays these
 
 All values on the `Memory.stats` object are forwarded to Grafana verbatim.
 
