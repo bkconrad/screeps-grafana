@@ -2,10 +2,12 @@
 echo Starting containers...
 docker-compose up -d
 echo Waiting for grafana to start...
-do
+CURLRET=1
+while [[ $CURLRET != 0 ]]; do
 	sleep 1
-	curl -X HEAD http://localhost:1337
-while [[ $? != 0 ]]
+	curl -s -I http://localhost:1337 > /dev/null
+	CURLRET=$?
+done
 echo Configuring Datasource...
 curl -s 'http://admin:admin@localhost:1337/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"name":"localGraphite","type":"graphite","url":"http://graphite:8000","access":"proxy","isDefault":true,"database":""}' > /dev/null
 sleep 2
