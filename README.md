@@ -1,6 +1,9 @@
 # screeps-grafana
 
-Pretty graphs for Screeps stats. There are two ways to get started:
+Pretty graphs for Screeps stats. 
+![sampleDashboard](sampleDashboard.png)
+
+There are two ways to get started:
 
 ## Path 1: Easy but not robust
 You can run this project locally, with all the drawbacks that entails.
@@ -66,6 +69,10 @@ password: admin
 ```
 You are now ready to [create some dashboards](https://www.youtube.com/watch?v=OUvJamHeMpw).
 
+To use the Sample Dashboard, copy the contents of [stats.js](stats.js)
+A sample dashboard is already installed that displays the stats from [stats.js](stats.js)
+
+
 To send stats to the dashboard, simply write them to `Memory.stats`. For example:
 
 ```
@@ -73,8 +80,6 @@ Memory.stats["room." + room.name + ".energyAvailable"] = room.energyAvailable;
 Memory.stats["room." + room.name + ".energyCapacityAvailable"] = room.energyCapacityAvailable;
 Memory.stats["room." + room.name + ".controllerProgress"] = room.controller.progress;
 ```
-A sample dashboard is already installed that displays these
-
 All values on the `Memory.stats` object are forwarded to Grafana verbatim.
 
 ## License
