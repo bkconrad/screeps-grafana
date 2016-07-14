@@ -82,6 +82,13 @@ Memory.stats["room." + room.name + ".controllerProgress"] = room.controller.prog
 ```
 All values on the `Memory.stats` object are forwarded to Grafana verbatim.
 
+## Adding Grafana plugins
+Just run 
+`docker-compose exec grafana grafana-cli plugins install grafana-clock-panel`
+to install the plugins, then 
+`docker-compose restart grafana`
+to apply. Refresh your browser and voila!
+
 ## License
 
 This software is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
