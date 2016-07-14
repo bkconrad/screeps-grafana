@@ -57,7 +57,8 @@ You are now ready to use grafana!
 
 ## Usage
 
-Got to http://localhost:1337 or your own real-life server's IP. Login with the following default credentials:
+Go to http://localhost:1337 or your own real-life server's IP. Login with the following default credentials:
+NOTE: On Windows running Docker Toolbox use http://192.168.99.100:1337 instead
 
 ```
 username: admin
