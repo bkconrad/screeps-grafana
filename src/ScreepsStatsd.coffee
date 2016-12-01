@@ -39,7 +39,7 @@ class ScreepsStatsd
   signin: () =>
     @client = new StatsD host: process.env.GRAPHITE_PORT_8125_UDP_ADDR
     options =
-      uri: 'https://screeps.com/api/auth/signin'
+      uri: process.env.SCREEPS_HOSTNAME + '/api/auth/signin'
       json: true
       method: 'POST'
       body:
@@ -51,8 +51,8 @@ class ScreepsStatsd
 
   getMemory: () =>
     options =
-      uri: 'https://screeps.com/api/user/memory'
-      method: 'GET' 
+      uri: process.env.SCREEPS_HOSTNAME + '/api/user/memory'
+      method: 'GET'
       json: true
       headers:
         "X-Token": @token
