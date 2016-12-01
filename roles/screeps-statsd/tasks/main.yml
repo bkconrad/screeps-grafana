@@ -67,6 +67,7 @@
     links:
     - graphite
     env:
+      SCREEPS_HOSTNAME: "{{ screeps_hostname }}"
       SCREEPS_USERNAME: "{{ screeps_username }}"
       SCREEPS_EMAIL: "{{ screeps_email }}"
       SCREEPS_PASSWORD: "{{ screeps_password }}"
