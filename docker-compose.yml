@@ -1,7 +1,9 @@
 version: "2"
 services:
   node:
-    image: screepers/screeps-statsd
+     build:
+        context: .
+        dockerfile: Dockerfile
     restart: always
     links:
      - statsd
