@@ -43,7 +43,7 @@ class ScreepsStatsd
     if(token != "" && succes)
       @getMemory()
       return
-    @client = new StatsD host: process.env.GRAPHITE_PORT_8125_UDP_ADDR
+    @client = new StatsD host: process.env.GRAPHITE_URI
     console.log "New login request - " + new Date()
     options =
       uri: 'https://screeps.com/api/auth/signin'
@@ -60,7 +60,7 @@ class ScreepsStatsd
     succes = false
     options =
       uri: 'https://screeps.com/api/user/memory'
-      method: 'GET' 
+      method: 'GET'
       json: true
       resolveWithFullResponse: true
       headers:
@@ -68,6 +68,7 @@ class ScreepsStatsd
         "X-Username": token
       qs:
         path: 'stats'
+        shard: 'shard1'
     rp(options).then (x) =>
       # yeah... dunno why
       token = x.headers['x-token']
