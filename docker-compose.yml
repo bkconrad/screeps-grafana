@@ -18,17 +18,17 @@ services:
     image: ennexa/graphite
     restart: always
     volumes:
-     - /opt/graphite/conf
-     - /opt/graphite/storage/whisper
+     - ${DATA_DIR:-.data}:/opt/graphite/conf
+     - ${DATA_DIR:-.data}:/opt/graphite/storage/whisper
   grafana:
     image: grafana/grafana
     restart: always
     volumes:
-     - /var/lib/grafana
+     - ${DATA_DIR:-.data}:/var/lib/grafana
     links:
      - graphite
     ports:
-     - "1337:3000"
+     - "${GRAFANA_HOST_PORT:-1337}:3000"
   grafana_setup_datasource:
     image: appropriate/curl
     links:
