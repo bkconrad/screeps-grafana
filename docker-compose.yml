@@ -34,7 +34,7 @@ services:
     links:
      - grafana
     command: |
-      curl 'http://admin:admin@grafana:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"name":"localGraphite","type":"graphite","url":"http://graphite:8000","access":"proxy","isDefault":true,"database":""}'
+      curl 'http://admin:admin@grafana:3000/api/datasources' --retry 100 --retry-connrefused -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"name":"localGraphite","type":"graphite","url":"http://graphite:8000","access":"proxy","isDefault":true,"database":""}'
   grafana_setup_sampledashboard:
     image: appropriate/curl
     links:
@@ -42,4 +42,4 @@ services:
     volumes:
       - ./sampleDashboard.json:/sampleDashboard.json
     command: |
-      curl 'http://admin:admin@grafana:3000/api/dashboards/db' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data @/sampleDashboard.json
+      curl 'http://admin:admin@grafana:3000/api/dashboards/db' --retry 100 --retry-connrefused -X POST -H 'Content-Type: application/json;charset=UTF-8' --data @/sampleDashboard.json
