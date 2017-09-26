@@ -17,10 +17,10 @@ SimpleClass documentation
 ###
 rp = require 'request-promise'
 zlib = require 'zlib'
-# require('request-debug')(rp)
 StatsD = require 'node-statsd'
 token = ""
 succes = false
+
 class ScreepsStatsd
 
   ###

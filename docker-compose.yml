@@ -8,7 +8,7 @@ services:
     links:
      - statsd
     environment:
-      GRAPHITE_URI: "statsd"
+      GRAPHITE_URI: "statsd:8125"
     env_file: docker-compose.env
   statsd:
     image: ennexa/statsd
