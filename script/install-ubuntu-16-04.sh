@@ -22,7 +22,7 @@ fi
 
 # install docker
 # https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-convenience-script
-curl -fsSL get.docker.com -o | sudo sh -
+curl -fsSL get.docker.com | sudo sh -
 sudo usermod -aG docker "$(whoami)"
 
 # install docker-compose
