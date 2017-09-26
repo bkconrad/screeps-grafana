@@ -5,7 +5,7 @@ function log() {
 }
 
 TAG=v1.0
-REPO="git@github.com:bkconrad/screeps-grafana.git"
+REPO="https://github.com/bkconrad/screeps-grafana.git"
 DIR_NAME="screeps-grafana"
 DATA_DISK=""
 DATA_DIR="/data"
