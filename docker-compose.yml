@@ -18,7 +18,6 @@ services:
     image: ennexa/graphite
     restart: always
     volumes:
-     - ${DATA_DIR:-.data}:/opt/graphite/conf
      - ${DATA_DIR:-.data}:/opt/graphite/storage/whisper
   grafana:
     image: grafana/grafana
