@@ -22,17 +22,22 @@ fi
 
 # install docker
 # https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-convenience-script
-curl -fsSL get.docker.com | sudo sh -
+if ! which docker ; then
+  curl -fsSL get.docker.com | sudo sh -
+fi
+
 sudo usermod -aG docker "$(whoami)"
 
 # install docker-compose
 # https://docs.docker.com/compose/install/#install-compose
-sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+if ! which docker-compose ; then
+  sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+fi
 
 sudo apt-get install --yes git
 
-if ![[ -z "$DATA_DISK" ]] ; then
+if ! [[ -z "$DATA_DISK" ]] ; then
   sudo mkdir -p "$DATA_DIR"
   if ! grep "$DATA_DISK" /etc/fstab ; then
     log "adding $DATA_DISK to /etc/fstab"
@@ -63,7 +68,7 @@ fi
 cd
 log "setting up screeps-grafana in pwd"
 
-if ![[ -d "DIR_NAME" ]] ; then
+if ! [[ -d "DIR_NAME" ]] ; then
   log "cloning $REPO into $DIR_NAME"
   git clone "$REPO" "$DIR_NAME"
 fi
