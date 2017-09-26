@@ -68,20 +68,26 @@ fi
 cd
 log "setting up screeps-grafana in pwd"
 
-if ! [[ -d "DIR_NAME" ]] ; then
+if ! [[ -d "$DIR_NAME" ]] ; then
   log "cloning $REPO into $DIR_NAME"
   git clone "$REPO" "$DIR_NAME"
 fi
 
 cd "$DIR_NAME"
-git fetch "$TAG"
+git fetch origin "$TAG"
 git reset --hard HEAD
 git checkout "$TAG"
+git pull
 
 cat > docker-compose.env <<EOF
 SCREEPS_EMAIL=$SCREEPS_EMAIL
 SCREEPS_PASSWORD=$SCREEPS_PASSWORD
 EOF
 
+cat > .env <<EOF
+GRAFANA_HOST_PORT=80
+EOF
+
 export GRAFANA_HOST_PORT="80"
-docker-compose up --build -d
+sudo docker-compose up --build -d
+sudo chown $(whoami) -R .
